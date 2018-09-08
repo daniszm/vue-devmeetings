@@ -15,7 +15,7 @@ const store = {
         this.state.items = await axios.get(`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${phrase}`).then(res => res.data);
         /* eslint-disable */
 
-        // this.state.items = this.state.items.replace("\"normalized_job_title\":", "\"title\":");
+        this.state.items.forEach(item => item.title = item.suggestion);
         console.log(this.state.items);
     },
     addProduct(product) {
