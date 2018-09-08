@@ -9,29 +9,21 @@
 <script>
 import ProductList from './components/ProductList'
 import FormComponent from './components/FormComponent'
+import axios from 'axios'
 
 export default {
   name: "app",
   components: {
     ProductList,
-    FormComponent
+    FormComponent,
+    axios
+  },
+  async created() {
+    this.items = await axios.get("http://api.dataatwork.org/v1/jobs").then(res => res.data);
   },
   data() {
     return {
-      items: [
-        {
-          id: 0,
-          name: "Nazwa 1"
-        },
-        {
-          id: 1,
-          name: "Nazwa 2"
-        },
-        {
-          id: 2,
-          name: "Nazwa 3"
-        }
-      ]
+      items: []
     };
   },
   methods: {
@@ -49,8 +41,8 @@ export default {
       this.inputText = "";
     },
 
-    removeElem(id) {
-        this.items = this.items.filter(obj => obj.id != id);
+    removeElem(uuid) {
+        this.items = this.items.filter(obj => obj.uuid != uuid);
     }
   }
 };

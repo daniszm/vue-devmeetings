@@ -1,9 +1,9 @@
 <template>
         <!-- 7. We can use Angular-like double brackets to create an expression -->
         <div>
-            <div v-for="elem in items" :key="elem.id">
-                <p style="display: inline-block">{{ elem.name }}</p> 
-                <button style="display: inline-block" @click="removeElem(elem.id)">X</button>
+            <div v-for="elem in items" :key="elem.uuid">
+                <p style="display: inline-block">{{ elem.title }}</p> 
+                <button style="display: inline-block" @click="removeElem(elem.uuid)">X</button>
             </div>
         </div>
 </template>
