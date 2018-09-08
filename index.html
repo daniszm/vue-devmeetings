@@ -27,7 +27,7 @@
         <div v-for="elem in items">
             <p>{{ elem.name }}</p>
         </div>
-        <button>Add</button>
+        <button @click="addElem()">Add</button>
     </div>
 
 
@@ -54,6 +54,16 @@
                     "name": "Nazwa 3"
                 }
                 ]
+            },
+            methods: {
+                addElem() {
+                    this.items.push(
+                        {
+                            "id": 3,
+                            "name": "Nazwa 4 (dodane)"
+                        }
+                    )
+                }
             }
         })
     </script>
