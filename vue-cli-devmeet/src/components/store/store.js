@@ -6,9 +6,17 @@ const store = {
     state: {
         items: []
     },
+    phrase: '',
     //6/ And methods to update
     async fetchProducts() {
         this.state.items = await axios.get("http://api.dataatwork.org/v1/jobs").then(res => res.data);
+    },
+    async findProduct(phrase) {
+        this.state.items = await axios.get(`http://api.dataatwork.org/v1/jobs/autocomplete?contains=${phrase}`).then(res => res.data);
+        /* eslint-disable */
+
+        // this.state.items = this.state.items.replace("\"normalized_job_title\":", "\"title\":");
+        console.log(this.state.items);
     },
     addProduct(product) {
         this.state.items.push(product);

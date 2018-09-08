@@ -1,7 +1,7 @@
 <template>
   <div id="app">
         <!-- 7. We can use Angular-like double brackets to create an expression -->
-        <ProductList :items="sharedState.items" @removeElem="removeElem"></ProductList>
+        <ProductList :items="sharedState.items" @removeElem="removeElem" @searchElem="searchElem"></ProductList>
         <FormComponent @submit-form="onAddProduct"></FormComponent>
     </div>   
 </template>
@@ -33,6 +33,9 @@ export default {
     },
     removeElem(uuid) {
       store.removeElem(uuid);
+    },
+    searchElem(searchName) {
+      store.findProduct(searchName);
     }
   }
 };
