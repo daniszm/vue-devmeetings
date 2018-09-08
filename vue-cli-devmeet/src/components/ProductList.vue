@@ -19,8 +19,8 @@ export default {
     }
   },
   methods: {
-    removeElem(id) {
-      this.$emit("test", id);
+    removeElem(uuid) {
+      this.$emit("removeElem", uuid);
     }
   }
 };

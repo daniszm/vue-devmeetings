@@ -2,7 +2,7 @@
         <form @submit.prevent="onSubmit()">
           <!-- <button @click="addElem()">Add</button> -->
           <label>Your:</label>
-          <input type="text" name="productName" v-model="newProduct.name" v-validate="'required|min:4'">
+          <input type="text" name="productName" v-model="newProduct.title" v-validate="'required|min:4'">
           <div v-show="errors.has('productName')">
             {{errors.first('productName')}}
           </div>
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       newProduct: {
-        name: ""
+        title: ""
       }
     }
   },
@@ -33,7 +33,7 @@ export default {
           ...this.newProduct
         };
         this.$emit("submit-form", obj);
-        this.newProduct.name = "";
+        this.newProduct.title = "";
         this.$validator.reset();
       });
     }

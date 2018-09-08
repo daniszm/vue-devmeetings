@@ -1,8 +1,8 @@
 <template>
   <div id="app">
         <!-- 7. We can use Angular-like double brackets to create an expression -->
-        <ProductList :items="items" @test="removeElem"></ProductList>
-        <FormComponent @submit-form="onSubmit"></FormComponent>
+        <ProductList :items="sharedState.items" @removeElem="removeElem"></ProductList>
+        <FormComponent @submit-form="onAddProduct"></FormComponent>
     </div>   
 </template>
 
@@ -10,6 +10,7 @@
 import ProductList from './components/ProductList'
 import FormComponent from './components/FormComponent'
 import axios from 'axios'
+import store from './components/store/store';
 
 export default {
   name: "app",
@@ -18,31 +19,20 @@ export default {
     FormComponent,
     axios
   },
-  async created() {
-    this.items = await axios.get("http://api.dataatwork.org/v1/jobs").then(res => res.data);
+  created() {
+    store.fetchProducts();
   },
   data() {
     return {
-      items: []
+      sharedState: store.state
     };
   },
   methods: {
-    onSubmit(obj) {
-        this.items.push(obj);
+    onAddProduct(product) {
+      store.addProduct(product);
     },
-    addElem() {
-      let currentId = this.items[this.items.length - 1].id;
-      let newId = currentId + 1;
-      const inputObj = {
-        id: newId,
-        name: this.inputText
-      };
-      this.items.push(inputObj);
-      this.inputText = "";
-    },
-
     removeElem(uuid) {
-        this.items = this.items.filter(obj => obj.uuid != uuid);
+      store.removeElem(uuid);
     }
   }
 };
