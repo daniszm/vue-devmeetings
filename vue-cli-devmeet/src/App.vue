@@ -15,8 +15,11 @@
         <form @submit.prevent="onSubmit()">
           <!-- <button @click="addElem()">Add</button> -->
           <label>Your:</label>
-          <input type="text" v-model="newProduct.name">
-          {{ newProduct.name }}
+          <input type="text" name="productName" v-model="newProduct.name" v-validate="'required|min:4'">
+          <div v-show="errors.has('productName')">
+            {{errors.first('productName')}}
+          </div>
+
           <button>Add</button>
         </form>
     </div>  
@@ -51,11 +54,17 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.items.push({
-        id: uuid(),
-        ...this.newProduct
-      });
-      this.newProduct.name = '';
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return;
+        }
+        this.items.push({
+          id: uuid(),
+          ...this.newProduct
+        });
+        this.newProduct.name = "";
+        this.validator.reset();
+    })
     },
 
     addElem() {
