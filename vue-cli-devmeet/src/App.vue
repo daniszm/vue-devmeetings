@@ -12,22 +12,24 @@
             <p style="display: inline-block">{{ elem.name }}</p> 
             <button style="display: inline-block" @click="removeElem(elem.id)">X</button>
         </div>
-        <button @click="addElem()">Add</button>
-        <label>Your:</label>
-        <input type="text" v-model="inputText">
-        {{ inputText }}
+        <form @submit.prevent="onSubmit()">
+          <!-- <button @click="addElem()">Add</button> -->
+          <label>Your:</label>
+          <input type="text" v-model="newProduct.name">
+          {{ newProduct.name }}
+          <button>Add</button>
+        </form>
     </div>  
   </div>  
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import uuid from 'uuid/v4';
 
 export default {
   name: "app",
   data() {
     return {
-      inputText: "",
       items: [
         {
           id: 0,
@@ -41,10 +43,21 @@ export default {
           id: 2,
           name: "Nazwa 3"
         }
-      ]
+      ],
+      newProduct: {
+        name: ''
+      }
     };
   },
   methods: {
+    onSubmit() {
+      this.items.push({
+        id: uuid(),
+        ...this.newProduct
+      });
+      this.newProduct.name = '';
+    },
+
     addElem() {
       let currentId = this.items[this.items.length - 1].id;
       let newId = currentId + 1;
