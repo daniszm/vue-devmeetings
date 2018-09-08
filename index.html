@@ -28,6 +28,9 @@
             <p>{{ elem.name }}</p>
         </div>
         <button @click="addElem()">Add</button>
+        <label>Your:</label>
+        <input type="text" v-model="inputText">
+        {{ inputText }}
     </div>
 
 
@@ -40,6 +43,7 @@
             el: '#app',
             //3/ 5. If we define 'data', the key will be available in HTML in a minute
             data: {
+                inputText: '',
                 items: [
                 {
                     "id": 1,
@@ -57,12 +61,15 @@
             },
             methods: {
                 addElem() {
-                    this.items.push(
-                        {
-                            "id": 3,
-                            "name": "Nazwa 4 (dodane)"
-                        }
-                    )
+                    currentId = this.items[this.items.length - 1].id;
+                    newId = currentId + 1;
+                    const inputObj = {
+                    "id": newId,
+                    "name": this.inputText
+                }
+                    console.log(inputObj);
+                    this.items.push(inputObj);
+                    this.inputText = '';
                 }
             }
         })
